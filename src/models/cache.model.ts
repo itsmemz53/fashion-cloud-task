@@ -6,6 +6,16 @@ import appUtils from "../utils/app.utils";
 
 const Schema = mongoose.Schema;
 const CacheSchema = new Schema({
+	createdAt: {
+		type: Date,
+		default: Date.now,
+		index: true
+	},
+	modifiedAt: {
+		type: Date,
+		default: Date.now,
+		index: true
+	},
 	key: {
 		type: String,
 		trim: true,
@@ -13,26 +23,16 @@ const CacheSchema = new Schema({
 	},
 	ttl: {
 		type: Number,
-		default: appUtils.getCacheTtl()
+		default: appUtils.getTTLFromConfig()
 	},
 	content: {
 		type: String,
-		default: appUtils.generateRandomCacheValue() // generates a random String
-	},
-	modifiedAt: {
-		type: Date,
-		default: Date.now,
-		index: true
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now,
-		index: true
+		default: appUtils.generateRandomString()
 	}
 }, {
 	collection: "cache"
 });
 
-CacheSchema.pre("save", appUtils.validateCacheRecord);
+CacheSchema.pre("save", appUtils.validateCache);
 
 export default mongoose.model("Cache", CacheSchema);

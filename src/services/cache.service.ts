@@ -1,4 +1,4 @@
-// services & helpers
+// utilities
 import appUtils from "../utils/app.utils";
 
 // models
@@ -9,13 +9,25 @@ import { SERVER_RESPONSE_MESSAGES } from "../constants/server-response.constant"
 
 class CacheService {
 
+    public async createOrUpdate({ key, content }: any) {
+        let cache: any = await CacheModel.findOne({ key }).exec();
+        if (cache) {
+            cache.content = content;
+            cache.modifiedAt = new Date();
+            cache.save();
+        } else {
+            cache = await CacheModel.create({ key, content });
+        }
+        return cache;
+    }
+
     // if key do not exist, create a new key with TTL
     public async get(key: string) {
         const response = {
             message: "",
             content: "",
         };
-        const newContent = appUtils.generateRandomCacheValue(new Date().getTime().toString());
+        const newContent = appUtils.generateRandomString();
         let cache: any = await CacheModel.findOne({ key }).exec();
         if (cache) {
             if (Date.parse(cache.modifiedAt) + (cache.ttl * 1000) < Date.now()) {
@@ -41,18 +53,6 @@ class CacheService {
     public async keys() {
         const list = await CacheModel.find({}).exec();
         return list;
-    }
-
-    public async createOrUpdate({ key, content }: any) {
-        let cache: any = await CacheModel.findOne({ key }).exec();
-        if (cache) {
-            cache.content = content;
-            cache.modifiedAt = new Date();
-            cache.save();
-        } else {
-            cache = await CacheModel.create({ key, content });
-        }
-        return cache;
     }
 
     public async remove(key: string) {

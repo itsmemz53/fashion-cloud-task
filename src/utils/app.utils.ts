@@ -6,12 +6,15 @@ const config = JSON.parse(fs.readFileSync("./config.json", "utf-8"));
 
 class AppUtils {
 
-    public generateRandomCacheValue(additionalString?: string): string {
-        // toString parameter 16 as base
-        return (Math.random() + 1).toString(16).substring(7) + additionalString;
+    public getTTLFromConfig(): number {
+        return config.cache.ttl;
     }
 
-    public validateCacheRecord(next: any) {
+    public generateRandomString(): string {
+        return (Math.random() + 1).toString(16).substring(7) + (+new Date).toString();
+    }
+
+    public validateCache(next: any) {
         const self: any = this;
         self.modifiedAt = new Date();
         if (!self.isNew) {
@@ -37,11 +40,6 @@ class AppUtils {
             }
         });
     }
-
-    public getCacheTtl(): number {
-        return config.cache.ttl;
-    }
-
 }
 
 export default new AppUtils();
