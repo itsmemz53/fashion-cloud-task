@@ -1,0 +1,58 @@
+{
+    "name": "fashion-cloud-task",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "scripts": {
+      "build": "npm-run-all lint tsc",
+      "start": "nodemon ./index.js",
+      "lint": "tslint -c tslint.json -p tsconfig.json --fix",
+      "tsc": "tsc",
+      "test": "mocha --timeout 60000 --require  babel-register dist/test/*.spec.js --exit",
+      "dev:start": "npm-run-all build start",
+      "dev": "nodemon --watch src -e ts --exec npm run dev:start",
+      "watch": "tsc -w"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/itsmemz53/fashion-cloud-task.git"
+    },
+    "author": "itsmemz53",
+    "license": "ISC",
+    "homepage": "https://github.com/itsmemz53/fashion-cloud-task",
+    "dependencies": {
+      "@types/chai": "^4.1.7",
+      "@types/jimp": "^0.2.28",
+      "@types/mocha": "^5.2.5",
+      "@types/request": "^2.48.1",
+      "babel-register": "^6.26.0",
+      "body-parser": "^1.18.3",
+      "chai": "^4.2.0",
+      "chai-http": "^4.2.1",
+      "cors": "^2.8.5",
+      "dotenv": "^6.2.0",
+      "express": "^4.16.4",
+      "jimp": "^0.6.0",
+      "mocha": "^5.2.0",
+      "mongoose": "^5.7.12",
+      "nconf": "^0.10.0",
+      "nodemon": "^1.18.9",
+      "npm-run-all": "^4.1.5",
+      "pg": "^7.7.1",
+      "pg-hstore": "^2.3.2",
+      "request": "^2.88.0",
+      "supertest": "^3.3.0",
+      "ts-node": "^7.0.1",
+      "tslint": "^5.12.0",
+      "typescript": "^3.2.2"
+    },
+    "devDependencies": {
+      "@types/cors": "^2.8.4",
+      "@types/dotenv": "^6.1.0",
+      "@types/express": "^4.16.0",
+      "@types/mongoose": "^5.5.32",
+      "@types/nconf": "0.0.37",
+      "@types/node": "^10.12.18"
+    }
+  }
+  
