@@ -50,33 +50,12 @@ class CacheController {
         }
     }
 
-    public async update(request: Request, response: Response) {
-        const key = request.params.key;
+    public async createOrUpdate(request: Request, response: Response) {
         const body = request.body;
-        if (key && body) {
+        if (body && body.key && body.content) {
             try {
-                const list = await cacheService.update(body);
-                response.send(responseHandler.success(list));
-            } catch (err) {
-                response.send(responseHandler.error(err));
-            }
-        } else {
-            response.send(
-                responseHandler.error(
-                null,
-                SERVER_RESPONSE_CODES.CODE_BAD_REQUEST,
-                SERVER_RESPONSE_MESSAGES.INVALID_OPERATION
-                )
-            );
-        }
-    }
-
-    public async create(request: Request, response: Response) {
-        const body = request.body;
-        if (body) {
-            try {
-                const list = await cacheService.create(body);
-                response.send(responseHandler.success(list));
+                const cache = await cacheService.createOrUpdate(body);
+                response.send(responseHandler.success(cache));
             } catch (err) {
                 response.send(responseHandler.error(err));
             }
@@ -95,8 +74,8 @@ class CacheController {
         const key = request.params.key;
         if (key) {
             try {
-                const isKeyRemoved = await cacheService.remove(key);
-                response.send(responseHandler.success(isKeyRemoved));
+                const cache = await cacheService.remove(key);
+                response.send(responseHandler.success(cache));
             } catch (err) {
                 response.send(responseHandler.error(err));
             }
@@ -113,8 +92,8 @@ class CacheController {
 
     public async deleteAll(request: Request, response: Response) {
         try {
-            const isAllKeysRemoved = await cacheService.removeAll();
-            response.send(responseHandler.success(isAllKeysRemoved));
+            const cache = await cacheService.removeAll();
+            response.send(responseHandler.success(cache));
         } catch (err) {
             response.send(responseHandler.error(err));
         }

@@ -1,5 +1,16 @@
 {
     "http": {
         "port": 8100
-    }
+    },
+    "mongodb": {
+		"url": "mongodb://127.0.0.1:27017/fashioncloudtask",
+		"autoReconnect": true,
+		"autoRemove": "native",
+		"autoRemoveInterval": 10,
+		"seed": false
+	},
+	"cache": {
+		"maxLimit": 5,
+		"ttl": 86400
+	}
 }

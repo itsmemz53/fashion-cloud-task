@@ -1,5 +1,5 @@
 import { SERVER_RESPONSE_CODES, SERVER_RESPONSE_MESSAGES } from "../constants/server-response.constant";
-import { ServerResponse } from "../models/server-response.model";
+import { ServerResponse } from "../services/server-response.service";
 
 class ResponseHandler {
     public success(data: any) {

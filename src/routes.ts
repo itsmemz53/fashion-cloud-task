@@ -12,7 +12,7 @@ export default class Routes {
 
     constructor(app: Application) {
         // ROUTE Create
-        app.route(this.api + RouteConstants.ROUTE_CACHE).patch(cacheController.create);
+        app.route(this.api + RouteConstants.ROUTE_CACHE).post(cacheController.createOrUpdate);
 
         // Route GET :KEY
         app.route(this.api + RouteConstants.ROUTE_CACHE + "/:key").get(cacheController.get);
@@ -21,7 +21,7 @@ export default class Routes {
         app.route(this.api + RouteConstants.ROUTE_CACHE + "/list").get(cacheController.getAll);
 
         // ROUTE Patch
-        app.route(this.api + RouteConstants.ROUTE_CACHE + "/:key").patch(cacheController.update);
+        app.route(this.api + RouteConstants.ROUTE_CACHE + "/:key").patch(cacheController.createOrUpdate);
 
         // Route DELETE :KEY
         app.route(this.api + RouteConstants.ROUTE_CACHE + "/:key").delete(cacheController.delete);
